@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="background" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thegostsniper.testfx.MainController">
+      <children>
+            <HBox id="#title_launcher" prefHeight="727.0" prefWidth="1288.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                        <Pane id="authentication_container" prefHeight="720.0" prefWidth="365.0" stylesheets="@css/style.css">
+                              <children>
+                                    <VBox prefHeight="720.0" prefWidth="365.0">
+                                          <children>
+                                                <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" text="Arffornia Launcher" textAlignment="CENTER">
+                                                      <font>
+                                                            <Font name="Montserrat Regular" size="37.0" />
+                                                      </font>
+                                                </Label>
+                                                <AnchorPane prefHeight="271.0" prefWidth="365.0">
+                                                      <children>
+                                                            <ImageView fitHeight="250.0" fitWidth="250.0" layoutX="58.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                                                                  <image>
+                                                                        <Image url="@images/Crafting_Table.png" />
+                                                                  </image>
+                                                            </ImageView>
+                                                      </children>
+                                                </AnchorPane>
+                                                <Button fx:id="homeBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuSwitchEvent" prefHeight="46.0" prefWidth="365.0" stylesheets="@css/style.css" text=" - Accueil">
+                                                      <graphic>
+                                                            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                  <image>
+                                                                        <Image url="@images/icon_house.png" />
+                                                                  </image>
+                                                            </ImageView>
+                                                      </graphic>
+                                                      <font>
+                                                            <Font name="Montserrat Regular" size="22.0" />
+                                                      </font>
+                                                      <VBox.margin>
+                                                            <Insets />
+                                                      </VBox.margin>
+                           <styleClass>
+                              <String fx:value="menu_button" />
+                              <String fx:value="menu_test" />
+                           </styleClass>
+                                                </Button>
+                                                <Button fx:id="parameterBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuSwitchEvent" prefHeight="46.0" prefWidth="365.0" styleClass="menu_button" stylesheets="@css/style.css" text=" - Paramètre">
+                                                      <graphic>
+                                                            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                                                  <image>
+                                                                        <Image url="@images/icon_parameter.png" />
+                                                                  </image>
+                                                            </ImageView>
+                                                      </graphic>
+                                                      <font>
+                                                            <Font name="Montserrat Regular" size="22.0" />
+                                                      </font>
+                                                </Button>
+                                          </children>
+                                    </VBox>
+                              </children>
+                        </Pane>
+            <AnchorPane prefHeight="720.0" prefWidth="915.0">
+               <children>
+                  <Pane fx:id="homePagePane" prefHeight="720.0" prefWidth="915.0">
+                     <children>
+                        <Label layoutX="336.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page1" textFill="WHITE">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="settingsPagePane" prefHeight="720.0" prefWidth="915.0" visible="false">
+                     <children>
+                        <Label layoutX="336.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page2" textFill="WHITE">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+                  </children>
+            </HBox>
+      </children>
+</AnchorPane>
