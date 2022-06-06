@@ -10,16 +10,9 @@ public class MainController {
 		  private  int menuSelectorVar = 1;
 
 		  @FXML
-		  private Button homeBtn;
-
+		  private Button homeBtn, parameterBtn ;
 		  @FXML
-		  private  Button parameterBtn;
-
-		  @FXML
-		  private Pane homePagePane;
-
-		  @FXML
-		  private Pane settingsPagePane;
+		  private Pane settingsPagePane, homePagePane;
 
 
 		  @FXML

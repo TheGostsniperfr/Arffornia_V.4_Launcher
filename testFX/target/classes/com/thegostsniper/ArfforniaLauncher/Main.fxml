@@ -4,6 +4,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,13 +16,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="background" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thegostsniper.ArfforniaLauncher.MainController">
       <children>
-            <HBox id="#title_launcher" prefHeight="727.0" prefWidth="1288.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox id="#title_launcher" prefHeight="727.0" prefWidth="1288.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <children>
                         <Pane id="authentication_container" prefHeight="720.0" prefWidth="365.0" stylesheets="@css/style.css">
                               <children>
-                                    <VBox prefHeight="720.0" prefWidth="365.0">
+                                    <VBox minHeight="-Infinity" minWidth="365.0" prefHeight="720.0" prefWidth="365.0">
                                           <children>
-                                                <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" text="Arffornia Launcher" textAlignment="CENTER">
+                                                <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" stylesheets="@css/style.css" text="Arffornia Launcher" textAlignment="CENTER">
                                                       <font>
                                                             <Font name="Montserrat Regular" size="37.0" />
                                                       </font>
@@ -71,27 +73,53 @@
                         </Pane>
             <AnchorPane prefHeight="720.0" prefWidth="915.0">
                <children>
-                  <Pane fx:id="homePagePane" prefHeight="720.0" prefWidth="915.0">
+                  <Pane fx:id="homePagePane" layoutY="6.0" prefHeight="714.0" prefWidth="915.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <Label layoutX="336.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page1" textFill="WHITE">
+                        <Label layoutX="362.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page1" textFill="WHITE">
                            <font>
                               <Font size="51.0" />
                            </font>
                         </Label>
+                        <AnchorPane layoutY="555.0" prefHeight="158.0" prefWidth="915.0">
+                           <children>
+                              <Button id="playButton" layoutX="327.0" layoutY="46.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="261.0" stylesheets="@css/style.css" text="Jouer">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="32.0" />
+                                 </font>
+                              </Button>
+                              <ProgressBar id="updateProgressBar" layoutY="139.0" prefHeight="18.0" prefWidth="915.0" progress="0.08" stylesheets="@css/style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="settingsPagePane" prefHeight="720.0" prefWidth="915.0" visible="false">
+                  <Pane fx:id="settingsPagePane" prefHeight="720.0" prefWidth="915.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <Label layoutX="336.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page2" textFill="WHITE">
                            <font>
                               <Font size="51.0" />
                            </font>
                         </Label>
+                        <AnchorPane layoutY="562.0" prefHeight="158.0" prefWidth="915.0">
+                           <children>
+                              <Label layoutX="37.0" layoutY="63.0" prefHeight="34.0" prefWidth="267.0" text="Mémoire alloué :" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Slider id="ramSlider" layoutX="442.0" layoutY="55.0" prefHeight="49.0" prefWidth="350.0" stylesheets="@css/style.css" />
+                              <Label layoutX="273.0" layoutY="63.0" prefHeight="34.0" prefWidth="267.0" text="0 Mo" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </Pane>
                </children>
             </AnchorPane>
                   </children>
             </HBox>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
       </children>
 </AnchorPane>
