@@ -99,15 +99,15 @@
                               <Font size="51.0" />
                            </font>
                         </Label>
-                        <AnchorPane layoutY="562.0" prefHeight="158.0" prefWidth="915.0">
+                        <AnchorPane cacheShape="false" centerShape="false" layoutY="562.0" prefHeight="158.0" prefWidth="915.0">
                            <children>
                               <Label layoutX="37.0" layoutY="63.0" prefHeight="34.0" prefWidth="267.0" text="Mémoire alloué :" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="25.0" />
                                  </font>
                               </Label>
-                              <Slider id="ramSlider" layoutX="442.0" layoutY="55.0" prefHeight="49.0" prefWidth="350.0" stylesheets="@css/style.css" />
-                              <Label layoutX="273.0" layoutY="63.0" prefHeight="34.0" prefWidth="267.0" text="0 Mo" textFill="WHITE">
+                              <Slider id="ramSlider" fx:id="ramSlider" blockIncrement="1.0" layoutX="370.0" layoutY="70.0" majorTickUnit="1.0" max="16.0" min="1.0" minorTickCount="1" onMouseReleased="#onSliderChanged" prefHeight="34.0" prefWidth="388.0" showTickMarks="true" stylesheets="@css/style.css" value="3.0" />
+                              <Label layoutX="273.0" layoutY="63.0" prefHeight="34.0" prefWidth="90.0" text="0 Mo" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="25.0" />
                                  </font>
