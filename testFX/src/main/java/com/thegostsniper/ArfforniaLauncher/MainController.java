@@ -6,11 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,7 +21,11 @@ public class MainController implements Initializable  {
 		  private int menuSelectorVar = 1;
 
 		  @FXML
-		  private Button homeBtn, parameterBtn;
+		  private Button homeBtn, parameterBtn, pseudoValidateBtn;
+		  @FXML
+		  private TextField pseudoTextField;
+		  @FXML
+		  private ImageView PseudoImageView;
 		  @FXML
 		  private Pane settingsPagePane, homePagePane;
 		  @FXML
@@ -41,6 +47,36 @@ public class MainController implements Initializable  {
 
 		  }
 
+
+		  //Avatar Display Management
+		  @FXML
+		  void SendPseudo(ActionEvent e){
+					System.out.println("test du bouton valider");
+					String username = pseudoTextField.getText();
+
+					//Get Steve View
+					Image steveAvatarImage = new Image(getClass().getResourceAsStream("images/Steve.png"));
+
+					//test username field is empty
+					if(username != ""){
+							  System.out.println("pseudo entré : " + username);
+							  //Get avatar View
+							  System.out.println("https://minotar.net/avatar/"+username);
+							  Image playerAvatarImage = new Image("https://minotar.net/avatar/" + username + ".png");
+
+							  if(playerAvatarImage.getWidth() != 0){
+										PseudoImageView.setImage(playerAvatarImage);
+							  }else {
+										PseudoImageView.setImage(steveAvatarImage);
+							  }
+					}else {
+							  //pop up : "no username !"
+							  System.out.println("Aucun pseudo !");
+							  PseudoImageView.setImage(steveAvatarImage);
+
+					}
+
+		  }
 		  @FXML
 		  void menuSwitchEvent(ActionEvent e) {
 					// menu choice
