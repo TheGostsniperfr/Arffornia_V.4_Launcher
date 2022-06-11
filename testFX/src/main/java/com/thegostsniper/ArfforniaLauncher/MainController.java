@@ -1,12 +1,18 @@
 package com.thegostsniper.ArfforniaLauncher;
 
+import fr.flowarg.flowupdater.FlowUpdater;
+import fr.flowarg.flowupdater.download.IProgressCallback;
+import fr.flowarg.flowupdater.download.Step;
+import fr.flowarg.flowupdater.utils.UpdaterOptions;
+import fr.flowarg.flowupdater.versions.VanillaVersion;
+import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
+import fr.theshark34.openlauncherlib.external.ExternalLauncher;
+import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -14,7 +20,9 @@ import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class MainController implements Initializable  {
 
@@ -30,9 +38,16 @@ public class MainController implements Initializable  {
 		  private Pane settingsPagePane, homePagePane;
 		  @FXML
 		  private Slider ramSlider;
+		  @FXML
+		  private ProgressBar progressBar;
+		  @FXML
+		  private Label ramLabel;
 		  private int allocatedRamValue;
 
+
 		  private Saver saver  = MainApp.getInstance().getSaver();
+
+		  private AuthInfos authInfos= null;
 
 
 
@@ -42,6 +57,7 @@ public class MainController implements Initializable  {
 
 					if(saver.get("allocatedRam") != String.valueOf(allocatedRamValue)){
 							  saver.set("allocatedRam",String.valueOf(allocatedRamValue));
+							  ramLabel.setText(allocatedRamValue + "Mo");
 					}
 					System.out.println(allocatedRamValue);
 
@@ -50,7 +66,7 @@ public class MainController implements Initializable  {
 
 		  //Avatar Display Management
 		  @FXML
-		  void SendPseudo(ActionEvent e){
+		  void SendPseudo(){
 					System.out.println("test du bouton valider");
 					String username = pseudoTextField.getText();
 
@@ -66,6 +82,7 @@ public class MainController implements Initializable  {
 
 							  if(playerAvatarImage.getWidth() != 0){
 										PseudoImageView.setImage(playerAvatarImage);
+										saver.set("username", username);
 							  }else {
 										PseudoImageView.setImage(steveAvatarImage);
 							  }
@@ -112,6 +129,50 @@ public class MainController implements Initializable  {
 					}
 		  }
 
+		  public void update() throws Exception {
+					VanillaVersion version = new VanillaVersion.VanillaVersionBuilder().withName("1.16.5").build();
+					UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder().build();
+					FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder().withVanillaVersion(version).withUpdaterOptions(options).build();
+					updater.update(MainApp.getInstance().getLauncherDir());
+
+					};
+
+
+
+		  public void startGame(){
+					GameInfos infos = new GameInfos("Arffornia_V.4", new GameVersion("1.16.5", GameType.V1_13_HIGHER_VANILLA), new GameTweak[]{});
+
+					try {
+
+							update();
+
+							  //Recupération des infos
+							  this.authInfos = new AuthInfos(pseudoTextField.getText(), UUID.randomUUID().toString(), UUID.randomUUID().toString());
+
+
+							  ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER , authInfos);
+
+							  //add memory to
+							  profile.getVmArgs().add("-Xmx" + saver.get("allocatedRam") + "M");
+
+							  ExternalLauncher launcher = new ExternalLauncher(profile);
+
+							  Process p = launcher.launch();
+
+
+
+					}catch (Exception e){
+							  e.printStackTrace();
+							  //input in logger
+					}
+
+		  }
+
+
+
+
+
+
 		  @Override
 		  public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -121,6 +182,10 @@ public class MainController implements Initializable  {
 					ramSlider.setMax((int) (Math.floor((Math.ceil(memory.getTotal() / Math.pow(1024, 2))) / 1024)));
 
 					try {
+							  if(saver.get("username") != ""){
+										pseudoTextField.setText(saver.get("username"));
+										SendPseudo();
+							  }
 
 
 							  if (saver.get("allocatedRam") != "") {
@@ -134,12 +199,6 @@ public class MainController implements Initializable  {
 					}
 					System.out.println("test Allocated ram : " + allocatedRamValue);
 					ramSlider.setValue(allocatedRamValue/1024);
-
-
-
-
-
-
 
 
 		  }

@@ -1,5 +1,6 @@
 package com.thegostsniper.ArfforniaLauncher;
 
+import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,35 +9,35 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.file.Path;
+
+
 
 
 
 public class MainApp extends Application {
 
 		  private Saver saver;
+
+
+		  private final Path launcherDir = GameDirGenerator.createGameDir("Arffornia_V.4",true);
 		  private static MainApp instance;
 
 
-		  public MainApp() throws IOException {
+		  public MainApp()  {
 					instance = this;
 
-					String dataLocate = (System.getenv("APPDATA") + "\\Arffornia_V.4");
-					File dossier = new File(dataLocate);
-					dossier.mkdir();
-
-					String saverLocate = (dataLocate + "\\launcher.properties");
-					File configProperties = new File(saverLocate);
-
-					configProperties.createNewFile();
 
 
-
-					saver = new Saver(Paths.get(saverLocate));
+					saver = new Saver(this.launcherDir.resolve("launcher.properties"));
 					saver.load();
+
+
 		  }
+
+
+
 
 
 		  @Override
@@ -63,6 +64,8 @@ public class MainApp extends Application {
 		  public Saver getSaver() {
 					return saver;
 		  }
+
+		  public Path getLauncherDir() {return launcherDir; }
 
 		  public static MainApp getInstance(){
 					return instance;
