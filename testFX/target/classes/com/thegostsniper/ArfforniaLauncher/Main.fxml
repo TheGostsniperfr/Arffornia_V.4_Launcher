@@ -89,7 +89,7 @@
                         </Pane>
             <AnchorPane prefHeight="720.0" prefWidth="915.0">
                <children>
-                  <Pane fx:id="homePagePane" layoutY="6.0" prefHeight="714.0" prefWidth="915.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Pane fx:id="homePagePane" layoutY="6.0" prefHeight="714.0" prefWidth="915.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <Label layoutX="362.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page1" textFill="WHITE">
                            <font>
@@ -98,17 +98,17 @@
                         </Label>
                         <AnchorPane layoutY="555.0" prefHeight="158.0" prefWidth="915.0">
                            <children>
-                              <Button id="playButton" layoutX="327.0" layoutY="46.0" mnemonicParsing="false" onAction="#startGame" prefHeight="67.0" prefWidth="261.0" stylesheets="@css/style.css" text="Jouer">
+                              <Button id="playButton" fx:id="playButton" layoutX="327.0" layoutY="46.0" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="261.0" stylesheets="@css/style.css" text="Jouer">
                                  <font>
                                     <Font name="Montserrat Regular" size="32.0" />
                                  </font>
                               </Button>
-                              <ProgressBar id="updateProgressBar" fx:id="progressBar" layoutY="139.0" prefHeight="18.0" prefWidth="915.0" progress="0.08" stylesheets="@css/style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <ProgressBar id="updateProgressBar" fx:id="progressBar" layoutY="139.0" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="settingsPagePane" prefHeight="720.0" prefWidth="915.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Pane fx:id="settingsPagePane" prefHeight="720.0" prefWidth="915.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <Label layoutX="336.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page2" textFill="WHITE">
                            <font>
