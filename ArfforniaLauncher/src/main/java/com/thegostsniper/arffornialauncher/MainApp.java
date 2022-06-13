@@ -36,7 +36,7 @@ public class MainApp extends Application {
 		  public void start(Stage primaryStage) throws IOException {
 					Parent root = FXMLLoader.load(MainApp.class.getResource("Main.fxml"));
 
-					primaryStage.setTitle("Arffornia V.4");
+					primaryStage.setTitle("Arffornia Launcher");
 					primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/Crafting_Table.png")));
 
 					Scene scene = new Scene(root, 1280, 720);

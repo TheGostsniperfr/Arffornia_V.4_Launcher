@@ -23,9 +23,9 @@
                               <children>
                                     <VBox minHeight="-Infinity" minWidth="365.0" prefHeight="720.0" prefWidth="365.0">
                                           <children>
-                                                <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" stylesheets="@css/style.css" text="Arffornia Launcher" textAlignment="CENTER">
+                                                <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" stylesheets="@css/style.css" text="Arffornia V.4" textAlignment="CENTER">
                                                       <font>
-                                                            <Font name="Montserrat Regular" size="37.0" />
+                                                            <Font name="Montserrat Regular" size="50.0" />
                                                       </font>
                                                 </Label>
                                                 <AnchorPane prefHeight="271.0" prefWidth="365.0">
@@ -68,21 +68,85 @@
                                                             <Font name="Montserrat Regular" size="22.0" />
                                                       </font>
                                                 </Button>
-                        <TextField fx:id="pseudoTextField" promptText="Taper votre pseudo">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </TextField>
-                        <Button fx:id="pseudoValidateBtn" mnemonicParsing="false" onAction="#SendPseudo" text="Valider">
-                           <font>
-                              <Font name="Montserrat Regular" size="15.0" />
-                           </font>
-                        </Button>
-                        <ImageView fx:id="PseudoImageView" fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/Steve.png" />
-                           </image>
-                        </ImageView>
+                        <AnchorPane prefHeight="285.0" prefWidth="365.0">
+                           <children>
+                              <Pane fx:id="ConnexionView" layoutY="111.0" prefHeight="174.0" prefWidth="365.0">
+                                 <children>
+                                    <Button fx:id="pseudoValidateBtn" layoutX="287.0" layoutY="115.0" mnemonicParsing="false" onAction="#SendPseudo">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="15.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/checked.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="OnlineModeBtn" layoutX="75.0" layoutY="114.0" mnemonicParsing="false" onAction="#OnlineMode" text="Online mode">
+                                       <graphic>
+                                          <ImageView fx:id="OnlineModeImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/wifi.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Button>
+                                    <TextField fx:id="pseudoTextField" layoutX="75.0" layoutY="14.0" prefHeight="40.0" prefWidth="267.0" promptText="Taper votre pseudo">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="PasswordTextField" layoutX="75.0" layoutY="54.0" prefHeight="40.0" prefWidth="267.0" promptText="Taper votre mot de passe">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="19.0" />
+                                       </font>
+                                    </TextField>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/user(1).png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/padlock.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="LogoutView" prefHeight="285.0" prefWidth="365.0" visible="false">
+                                 <children>
+                                    <AnchorPane layoutY="170.0" prefHeight="115.0" prefWidth="365.0">
+                                       <children>
+                                          <ImageView fx:id="PseudoImageView" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/Steve.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label fx:id="PseudoLabel" layoutX="121.0" layoutY="41.0" prefHeight="34.0" prefWidth="174.0" text="Pseudo">
+                                             <font>
+                                                <Font size="23.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="LogoutBtn" layoutX="300.0" layoutY="36.0" mnemonicParsing="false" onAction="#Logout">
+                                             <graphic>
+                                                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@images/logout.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
                                           </children>
                                     </VBox>
                               </children>
@@ -98,12 +162,12 @@
                         </Label>
                         <AnchorPane layoutY="555.0" prefHeight="158.0" prefWidth="915.0">
                            <children>
-                              <Button id="playButton" fx:id="playButton" layoutX="327.0" layoutY="46.0" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="261.0" stylesheets="@css/style.css" text="Jouer">
+                              <Button id="playButton" fx:id="playButton" disable="true" layoutX="327.0" layoutY="46.0" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="261.0" stylesheets="@css/style.css" text="Jouer">
                                  <font>
                                     <Font name="Montserrat Regular" size="32.0" />
                                  </font>
                               </Button>
-                              <ProgressBar id="updateProgressBar" fx:id="progressBar" layoutY="139.0" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <ProgressBar id="updateProgressBar" fx:id="progressBar" layoutY="139.0" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -136,6 +200,5 @@
             </AnchorPane>
                   </children>
             </HBox>
-      <Pane prefHeight="200.0" prefWidth="200.0" />
       </children>
 </AnchorPane>

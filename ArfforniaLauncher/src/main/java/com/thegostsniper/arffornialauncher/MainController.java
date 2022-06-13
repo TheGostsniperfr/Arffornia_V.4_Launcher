@@ -21,6 +21,7 @@ import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -30,25 +31,27 @@ public class MainController implements Initializable {
 		  private boolean isRuntime =false;
 
 		  @FXML
-		  private Button homeBtn, parameterBtn, pseudoValidateBtn, playButton;
+		  private Button homeBtn, parameterBtn, pseudoValidateBtn, playButton, OnlineModeBtn, LogoutBtn;
 		  @FXML
-		  private TextField pseudoTextField;
+		  private TextField pseudoTextField, PasswordTextField;
 		  @FXML
-		  private ImageView PseudoImageView;
+		  private ImageView PseudoImageView, OnlineModeImage;
 		  @FXML
-		  private Pane settingsPagePane, homePagePane;
+		  private Pane settingsPagePane, homePagePane, LogoutView, ConnexionView;
 		  @FXML
 		  private Slider ramSlider;
 		  @FXML
 		  private ProgressBar progressBar;
 		  @FXML
-		  private Label ramLabel;
+		  private Label ramLabel, PseudoLabel;
 		  private int allocatedRamValue;
 
 
 		  private Saver saver  = MainApp.getInstance().getSaver();
 		  private AuthInfos authInfos= null;
 		  private  String gameVersion = "1.16.5";
+
+		  private Boolean OnlineModeStatue = true;
 
 
 
@@ -76,17 +79,37 @@ public class MainController implements Initializable {
 
 					//test username field is empty
 					if(username != ""){
-							  System.out.println("pseudo entré : " + username);
-							  //Get avatar View
-							  Image playerAvatarImage = new Image("https://minotar.net/avatar/" + username + ".png");
 
-							  if(playerAvatarImage.getWidth() != 0){
-										PseudoImageView.setImage(playerAvatarImage);
-										saver.set("username", username);
+							  //Max length Minecraft Pseudo Check
+							  if (username.length() <= 16){
+										System.out.println("pseudo entré : " + username);
+										//Get avatar View
+										Image playerAvatarImage = new Image("https://minotar.net/avatar/" + username + ".png");
+
+										if(playerAvatarImage.getWidth() != 0){
+
+												  //Authentification isTrue
+												  PseudoImageView.setImage(playerAvatarImage);
+												  saver.set("username", username);
+												  ConnexionView.setVisible(false);
+												  LogoutView.setVisible(true);
+												  PseudoLabel.setText(username);
+												  playButton.setDisable(false);
+
+
+										}else {
+												  PseudoImageView.setImage(steveAvatarImage);
+										}
 							  }else {
-										PseudoImageView.setImage(steveAvatarImage);
+										//Pseudo is too long
+										pseudoTextField.setText("");
 							  }
+
+
+
+
 					}else {
+							  //Authentification isFalse
 							  //pop up : "no username !"
 							  System.out.println("Aucun pseudo !");
 							  PseudoImageView.setImage(steveAvatarImage);
@@ -129,6 +152,41 @@ public class MainController implements Initializable {
 					}
 		  }
 
+		  @FXML
+		  void OnlineMode(){
+					if (OnlineModeStatue == true){
+							  OnlineModeStatue = false;
+							  OnlineModeImage.setImage(new Image(getClass().getResourceAsStream("images/no-wifi.png")));
+							  PasswordTextField.setDisable(true);
+							  OnlineModeBtn.setText("Offline mode");
+							  PasswordTextField.setText("");
+							  saver.set("onlineMode", "false");
+							  System.out.println("onlineMode Saver turn false");
+
+					}else {
+							  OnlineModeStatue = true;
+							  OnlineModeImage.setImage(new Image(getClass().getResourceAsStream("images/wifi.png")));
+							  PasswordTextField.setDisable(false);
+							  OnlineModeBtn.setText("Online mode");
+							  saver.set("onlineMode", "true");
+							  System.out.println("onlineMode Saver turn true");
+
+
+					}
+		  }
+
+		  @FXML
+		  void Logout(){
+					PseudoImageView.setImage(new Image(getClass().getResourceAsStream("images/Steve.png")));
+					saver.set("username", "");
+					ConnexionView.setVisible(true);
+					LogoutView.setVisible(false);
+					playButton.setDisable(true);
+
+		  }
+
+
+
 		  public void  update()  {
 					IProgressCallback callback = new IProgressCallback() {
 							  @Override
@@ -152,6 +210,9 @@ public class MainController implements Initializable {
 					}
 		  }
 
+
+
+
 		  public void startGame(){
 					try {
 							  //Recupération des infos
@@ -170,6 +231,10 @@ public class MainController implements Initializable {
 							  Platform.runLater(() -> {
 										playButton.setText("En cours");
 
+										//reset progressBar
+										progressBar.setProgress(0);
+										progressBar.setVisible(false);
+
 							  });
 
 							  new Thread(new Runnable() {
@@ -181,12 +246,16 @@ public class MainController implements Initializable {
 																	  //reset playButton
 																	  playButton.setText("Jouer");
 
-																	  //reset progressBar
-																	  progressBar.setProgress(0);
+																	  //reset playButton
+																	  playButton.setDisable(false);
 
 																	  //turn false isDownloading
-
 																	  isRuntime = false;
+
+																	  //parameterBtn active
+																	  parameterBtn.setDisable(false);
+																	  LogoutBtn.setDisable(false);
+
 															});
 												  } catch (InterruptedException e) {
 															e.printStackTrace();
@@ -203,12 +272,20 @@ public class MainController implements Initializable {
 
 		  }
 
+		  //When the play button is pressed
 		  public void play(){
 					//verif double click
 					if(isRuntime == false){
 
 							  playButton.setText("Lancement...");
 							  isRuntime = true;
+							  progressBar.setVisible(true);
+							  playButton.setDisable(true);
+
+							  //parameterBtn active
+							  parameterBtn.setDisable(true);
+							  LogoutBtn.setDisable(true);
+
 
 
 							  //call update function in new thread
@@ -236,10 +313,19 @@ public class MainController implements Initializable {
 										saver.set("allocatedRam", "3072");
 										allocatedRamValue = 3072;
 							  }
+
+							  //init ConnexionView
+							  if (saver.get("onlineMode") != null){
+										//if online mode saver is false, init onlineMode false view
+										if (Objects.equals(saver.get("onlineMode"), "false")){
+												  OnlineMode();
+										}
+							  }
 					}catch (Exception e){
 							  System.out.println(e);
 					}
 					System.out.println("test Allocated ram : " + allocatedRamValue);
 					ramSlider.setValue(allocatedRamValue/1024);
+
 		  }
 }
