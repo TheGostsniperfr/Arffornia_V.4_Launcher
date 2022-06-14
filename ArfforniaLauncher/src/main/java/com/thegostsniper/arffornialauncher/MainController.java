@@ -3,8 +3,19 @@ package com.thegostsniper.arffornialauncher;
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.DownloadList;
 import fr.flowarg.flowupdater.download.IProgressCallback;
+import fr.flowarg.flowupdater.download.json.CurseFileInfo;
+import fr.flowarg.flowupdater.download.json.Mod;
+import fr.flowarg.flowupdater.download.json.OptiFineInfo;
+import fr.flowarg.flowupdater.utils.ModFileDeleter;
 import fr.flowarg.flowupdater.utils.UpdaterOptions;
+import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
+import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VanillaVersion;
+import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
+import fr.flowarg.openlauncherlib.NoFramework;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
+import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
@@ -20,10 +31,9 @@ import javafx.scene.layout.Pane;
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
+import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
 
 public class MainController implements Initializable {
 
@@ -49,10 +59,13 @@ public class MainController implements Initializable {
 
 		  private Saver saver  = MainApp.getInstance().getSaver();
 		  private AuthInfos authInfos= null;
-		  private  String gameVersion = "1.16.5";
+		  private  String gameVersion = "1.18.2";
+		  private  String gameForgeVersion = "40.1.51";
+		  private String gameMCPVersion = "20220404.173914";
+		  private String gameOptifineVersion = "1.18.2_HD_U_H7";
 
 		  private Boolean OnlineModeStatue = true;
-
+		  private MicrosoftAuthResult authentificationResult = null;
 
 
 		  @FXML
@@ -65,58 +78,103 @@ public class MainController implements Initializable {
 					}
 					System.out.println(allocatedRamValue);
 
+
+		  }
+
+		  @FXML
+		  void SendPseudo(){
+					System.out.println("button sendPseudo pressed");
+
+					//Check username not empty
+					if(!pseudoTextField.getText().isEmpty()) {
+							  //when the playButton is pressed, send the pseudo to authenticated him
+							  if (OnlineModeStatue == true) {
+										authentication(pseudoTextField.getText(), PasswordTextField.getText());
+							  } else {
+										authentication(pseudoTextField.getText());
+							  }
+					}else {
+							  System.out.println("username is empty");
+							  MainApp.getInstance().getLogger().err("username is empty");
+					}
+		  }
+
+		  public void authentication(String username){
+					if(username.length() <= 16){
+							  saver.set("username", username);
+							  saver.set("accessToken", "");
+							  saver.set("refreshToken", "");
+							  switchConnexionView(true);
+
+					}else {
+							  System.out.println("username too long");
+					}
+
+
+		  }
+		  public void authentication(String email, String password) {
+					String username;
+					if (!email.isEmpty() && !password.isEmpty()) {
+
+							  //if player have token
+							  MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+
+							  try {
+
+										authentificationResult = authenticator.loginWithCredentials(email, password);
+										username = authentificationResult.getProfile().getName();
+										System.out.println("comtpe ok, username : " + username);
+
+										saver.set("username", authentificationResult.getProfile().getName());
+										saver.set("accessToken", authentificationResult.getAccessToken());
+										saver.set("refreshToken", authentificationResult.getRefreshToken());
+
+										switchConnexionView(true);
+
+
+
+
+							  } catch (MicrosoftAuthenticationException e) {
+										MainApp.getInstance().getLogger().err(e.toString());
+										e.printStackTrace();
+							  }
+
+					}
 		  }
 
 
-		  //Avatar Display Management
-		  @FXML
-		  void SendPseudo(){
-					System.out.println("test du bouton valider");
-					String username = pseudoTextField.getText();
+		  public void switchConnexionView(Boolean statue){
+					String username = saver.get("username");
 
 					//Get Steve View
 					Image steveAvatarImage = new Image(getClass().getResourceAsStream("images/Steve.png"));
 
-					//test username field is empty
-					if(username != ""){
+					if(!username.isEmpty()){
+							  //Get avatar View
+							  Image playerAvatarImage = new Image("https://minotar.net/avatar/" + username + ".png");
 
-							  //Max length Minecraft Pseudo Check
-							  if (username.length() <= 16){
-										System.out.println("pseudo entré : " + username);
-										//Get avatar View
-										Image playerAvatarImage = new Image("https://minotar.net/avatar/" + username + ".png");
+							  if (playerAvatarImage.getWidth() != 0) {
 
-										if(playerAvatarImage.getWidth() != 0){
-
-												  //Authentification isTrue
-												  PseudoImageView.setImage(playerAvatarImage);
-												  saver.set("username", username);
-												  ConnexionView.setVisible(false);
-												  LogoutView.setVisible(true);
-												  PseudoLabel.setText(username);
-												  playButton.setDisable(false);
-
-
-										}else {
-												  PseudoImageView.setImage(steveAvatarImage);
-										}
-							  }else {
-										//Pseudo is too long
-										pseudoTextField.setText("");
+										//Authentification isTrue
+										PseudoImageView.setImage(playerAvatarImage);
 							  }
 
-
-
-
-					}else {
-							  //Authentification isFalse
-							  //pop up : "no username !"
-							  System.out.println("Aucun pseudo !");
+					} else {
 							  PseudoImageView.setImage(steveAvatarImage);
-
 					}
 
+
+					PseudoLabel.setText(username);
+					playButton.setDisable(!statue);
+
+					ConnexionView.setVisible(!statue);
+					LogoutView.setVisible(statue);
+
+
+
+
 		  }
+
 		  @FXML
 		  void menuSwitchEvent(ActionEvent e) {
 					// menu choice
@@ -161,6 +219,8 @@ public class MainController implements Initializable {
 							  OnlineModeBtn.setText("Offline mode");
 							  PasswordTextField.setText("");
 							  saver.set("onlineMode", "false");
+							  pseudoTextField.setPromptText("Taper votre pseudo");
+
 							  System.out.println("onlineMode Saver turn false");
 
 					}else {
@@ -168,6 +228,7 @@ public class MainController implements Initializable {
 							  OnlineModeImage.setImage(new Image(getClass().getResourceAsStream("images/wifi.png")));
 							  PasswordTextField.setDisable(false);
 							  OnlineModeBtn.setText("Online mode");
+							  pseudoTextField.setPromptText("Taper votre email");
 							  saver.set("onlineMode", "true");
 							  System.out.println("onlineMode Saver turn true");
 
@@ -179,11 +240,13 @@ public class MainController implements Initializable {
 		  void Logout(){
 					PseudoImageView.setImage(new Image(getClass().getResourceAsStream("images/Steve.png")));
 					saver.set("username", "");
-					ConnexionView.setVisible(true);
-					LogoutView.setVisible(false);
-					playButton.setDisable(true);
+					saver.set("accessToken", "");
+					saver.set("refreshToken", "");
+
+					switchConnexionView(false);
 
 		  }
+
 
 
 
@@ -199,13 +262,41 @@ public class MainController implements Initializable {
 							  }
 					};
 					try {
-							  VanillaVersion version = new VanillaVersion.VanillaVersionBuilder().withName(gameVersion).build();
-							  UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder().build();
-							  FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder().withVanillaVersion(version).withProgressCallback(callback).withUpdaterOptions(options).build();
+							  final VanillaVersion version = new VanillaVersion.VanillaVersionBuilder()
+									  .withName(gameVersion)
+									  .build();
+
+							  final UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder()
+									  .build();
+
+							  List<CurseFileInfo> curseMods = CurseFileInfo.getFilesFromJson("http://arffornia.ddns.net/public/dowload/Arffornia_V.4_mods_list.json");
+							  List<Mod> mods = Mod.getModsFromJson("http://arffornia.ddns.net/public/dowload/Arffornia_V.4_mods_list.json");
+
+
+
+							  final AbstractForgeVersion forgeVersion = new ForgeVersionBuilder(ForgeVersionBuilder.ForgeVersionType.NEW)
+									  .withForgeVersion(gameForgeVersion)
+									  .withCurseMods(curseMods)
+									  .withMods(mods)
+									  .withOptiFine(new OptiFineInfo(gameOptifineVersion, false))
+									  .withFileDeleter(new ModFileDeleter(true))
+									  .build();
+
+
+							  final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
+									  .withVanillaVersion(version)
+									  .withModLoaderVersion(forgeVersion)
+									  .withLogger(MainApp.getInstance().getLogger())
+									  .withProgressCallback(callback)
+									  .withUpdaterOptions(options)
+									  .build();
+
+
 							  updater.update(MainApp.getInstance().getLauncherDir());
 							  startGame();
 
 					}catch (Exception e){
+							  MainApp.getInstance().getLogger().err(e.toString());
 							  e.printStackTrace();
 					}
 		  }
@@ -216,17 +307,33 @@ public class MainController implements Initializable {
 		  public void startGame(){
 					try {
 							  //Recupération des infos
-							  this.authInfos = new AuthInfos(pseudoTextField.getText(), UUID.randomUUID().toString(), UUID.randomUUID().toString());
-							  GameInfos infos = new GameInfos("Arffornia_V.4", new GameVersion(gameVersion, GameType.V1_13_HIGHER_VANILLA), new GameTweak[]{});
 
-							  ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER , authInfos);
+							  //check online mode
+							  if(OnlineModeStatue == false) {
+										this.authInfos = new AuthInfos(pseudoTextField.getText(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), "", "");
+							  }else {
+										this.authInfos = new AuthInfos(pseudoTextField.getText(), authentificationResult.getAccessToken(), authentificationResult.getProfile().getId(), "", "");
+
+							  }
+							  System.out.println("test gameInfo");
+							  GameInfos infos = new GameInfos("Arffornia_V.4",
+									  new GameVersion(gameVersion, GameType.V1_13_HIGHER_FORGE.setNFVD(new NewForgeVersionDiscriminator(gameForgeVersion, gameVersion,gameMCPVersion))),
+									  new GameTweak[]{});
+
+							  //ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER , authInfos);
+							  NoFramework noFramework = new NoFramework(MainApp.getInstance().getLauncherDir(),
+									  authInfos, GameFolder.FLOW_UPDATER,
+									  Arrays.asList("-Xms256m", "-Xmx" + saver.get("allocatedRam") + "m"), Collections.emptyList());
+
+							 Process p =  noFramework.launch(gameVersion, gameForgeVersion);
 
 							  //add memory to
-							  profile.getVmArgs().add("-Xmx" + saver.get("allocatedRam") + "M");
+							  //profile.getVmArgs().add("-Xmx" + saver.get("allocatedRam") + "M");
 
-							  ExternalLauncher launcher = new ExternalLauncher(profile);
+							  //ExternalLauncher launcher = new ExternalLauncher(profile);
 
-							  Process p = launcher.launch();
+
+							  //Process p = launcher.launch();
 
 							  Platform.runLater(() -> {
 										playButton.setText("En cours");
@@ -258,6 +365,8 @@ public class MainController implements Initializable {
 
 															});
 												  } catch (InterruptedException e) {
+															MainApp.getInstance().getLogger().err(e.toString());
+
 															e.printStackTrace();
 												  }
 										}
@@ -266,6 +375,8 @@ public class MainController implements Initializable {
 
 
 					}catch (Exception e){
+							  MainApp.getInstance().getLogger().err(e.toString());
+
 							  e.printStackTrace();
 							  //input in logger
 					}
@@ -294,6 +405,7 @@ public class MainController implements Initializable {
 					}
 		  }
 
+
 		  @Override
 		  public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -303,10 +415,6 @@ public class MainController implements Initializable {
 					ramSlider.setMax((int) (Math.floor((Math.ceil(memory.getTotal() / Math.pow(1024, 2))) / 1024)));
 
 					try {
-							  if(saver.get("username") != null){
-										pseudoTextField.setText(saver.get("username"));
-										SendPseudo();
-							  }
 							  if (saver.get("allocatedRam") != null) {
 										allocatedRamValue = Integer.parseInt(saver.get("allocatedRam"));
 							  } else {
@@ -321,7 +429,22 @@ public class MainController implements Initializable {
 												  OnlineMode();
 										}
 							  }
+
+							  if (OnlineModeStatue == false){
+										if(!saver.get("username").isEmpty()) {
+
+
+												  //offline connexion
+												  authentication(saver.get("username"));
+										} else if (!saver.get("accessToken").isEmpty() && !saver.get("refreshToken").isEmpty() ) {
+												  //online connexion
+												  authentication(saver.get("accessToken"), saver.get("refreshToken"));
+
+										}
+
+							  }
 					}catch (Exception e){
+							  MainApp.getInstance().getLogger().err(e.toString());
 							  System.out.println(e);
 					}
 					System.out.println("test Allocated ram : " + allocatedRamValue);
