@@ -13,6 +13,7 @@ import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VanillaVersion;
 import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
 import fr.flowarg.openlauncherlib.NoFramework;
+import fr.litarvan.openauth.microsoft.AuthTokens;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
@@ -65,7 +66,11 @@ public class MainController implements Initializable {
 		  private String gameOptifineVersion = "1.18.2_HD_U_H7";
 
 		  private Boolean OnlineModeStatue = true;
+		  
 		  private MicrosoftAuthResult authentificationResult = null;
+
+		  private MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+
 
 
 		  @FXML
@@ -102,7 +107,6 @@ public class MainController implements Initializable {
 		  public void authentication(String username){
 					if(username.length() <= 16){
 							  saver.set("username", username);
-							  saver.set("accessToken", "");
 							  saver.set("refreshToken", "");
 							  switchConnexionView(true);
 
@@ -117,16 +121,15 @@ public class MainController implements Initializable {
 					if (!email.isEmpty() && !password.isEmpty()) {
 
 							  //if player have token
-							  MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
 
 							  try {
+
 
 										authentificationResult = authenticator.loginWithCredentials(email, password);
 										username = authentificationResult.getProfile().getName();
 										System.out.println("comtpe ok, username : " + username);
 
 										saver.set("username", authentificationResult.getProfile().getName());
-										saver.set("accessToken", authentificationResult.getAccessToken());
 										saver.set("refreshToken", authentificationResult.getRefreshToken());
 
 										switchConnexionView(true);
@@ -147,22 +150,22 @@ public class MainController implements Initializable {
 					String username = saver.get("username");
 
 					//Get Steve View
-					Image steveAvatarImage = new Image(getClass().getResourceAsStream("images/Steve.png"));
+					Image playerAvatarImage = new Image(getClass().getResourceAsStream("images/Steve.png"));
 
-					if(!username.isEmpty()){
+					if(true) {
+							  //OnlineModeStatue == true
 							  //Get avatar View
-							  Image playerAvatarImage = new Image("https://minotar.net/avatar/" + username + ".png");
+							  Image playerAvatarImageTemp = new Image("https://minotar.net/avatar/" + username + ".png");
 
-							  if (playerAvatarImage.getWidth() != 0) {
-
+							  if (playerAvatarImageTemp.getWidth() != 0) {
 										//Authentification isTrue
-										PseudoImageView.setImage(playerAvatarImage);
+										playerAvatarImage = playerAvatarImageTemp;
 							  }
 
-					} else {
-							  PseudoImageView.setImage(steveAvatarImage);
 					}
 
+
+					PseudoImageView.setImage(playerAvatarImage);
 
 					PseudoLabel.setText(username);
 					playButton.setDisable(!statue);
@@ -240,7 +243,6 @@ public class MainController implements Initializable {
 		  void Logout(){
 					PseudoImageView.setImage(new Image(getClass().getResourceAsStream("images/Steve.png")));
 					saver.set("username", "");
-					saver.set("accessToken", "");
 					saver.set("refreshToken", "");
 
 					switchConnexionView(false);
@@ -310,9 +312,13 @@ public class MainController implements Initializable {
 
 							  //check online mode
 							  if(OnlineModeStatue == false) {
+										System.out.println("authInfo 1");
 										this.authInfos = new AuthInfos(pseudoTextField.getText(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), "", "");
 							  }else {
-										this.authInfos = new AuthInfos(pseudoTextField.getText(), authentificationResult.getAccessToken(), authentificationResult.getProfile().getId(), "", "");
+										System.out.println("authInfo 2");
+
+
+										this.authInfos = new AuthInfos(authentificationResult.getProfile().getName(), authentificationResult.getAccessToken(), authentificationResult.getProfile().getId(), "", "");
 
 							  }
 							  System.out.println("test gameInfo");
@@ -406,6 +412,7 @@ public class MainController implements Initializable {
 		  }
 
 
+
 		  @Override
 		  public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -436,13 +443,35 @@ public class MainController implements Initializable {
 
 												  //offline connexion
 												  authentication(saver.get("username"));
-										} else if (!saver.get("accessToken").isEmpty() && !saver.get("refreshToken").isEmpty() ) {
-												  //online connexion
-												  authentication(saver.get("accessToken"), saver.get("refreshToken"));
+										}
+							} else if (saver.get("refreshToken") != null ) {
+										if (!saver.get("refreshToken").isEmpty()) {
+												  try {
+
+															//recherche d'un token enregistré
+															System.out.println("Online ID find");
+
+
+															authentificationResult = authenticator.loginWithRefreshToken(saver.get("refreshToken"));
+
+															System.out.println("auth test : " + authentificationResult.getAccessToken() + " : " + authentificationResult.getRefreshToken());
+															saver.set("username", authentificationResult.getProfile().getName());
+															saver.set("refreshToken", authentificationResult.getRefreshToken());
+
+
+															switchConnexionView(true);
+
+
+												  } catch (Exception e) {
+															e.printStackTrace();
+															MainApp.getInstance().getLogger().err(e.toString());
+												  }
+
 
 										}
-
 							  }
+
+
 					}catch (Exception e){
 							  MainApp.getInstance().getLogger().err(e.toString());
 							  System.out.println(e);
