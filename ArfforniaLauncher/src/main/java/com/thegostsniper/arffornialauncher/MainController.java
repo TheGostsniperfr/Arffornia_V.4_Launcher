@@ -1,9 +1,11 @@
 package com.thegostsniper.arffornialauncher;
 
+import com.google.gson.JsonArray;
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.DownloadList;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.json.CurseFileInfo;
+import fr.flowarg.flowupdater.download.json.ExternalFile;
 import fr.flowarg.flowupdater.download.json.Mod;
 import fr.flowarg.flowupdater.download.json.OptiFineInfo;
 import fr.flowarg.flowupdater.utils.ModFileDeleter;
@@ -13,12 +15,9 @@ import fr.flowarg.flowupdater.versions.ForgeVersionBuilder;
 import fr.flowarg.flowupdater.versions.VanillaVersion;
 import fr.flowarg.openlauncherlib.NewForgeVersionDiscriminator;
 import fr.flowarg.openlauncherlib.NoFramework;
-import fr.litarvan.openauth.microsoft.AuthTokens;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
-import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Platform;
@@ -28,12 +27,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+
+
+
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
-import java.lang.reflect.Array;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 
 public class MainController implements Initializable {
@@ -48,13 +56,15 @@ public class MainController implements Initializable {
 		  @FXML
 		  private ImageView PseudoImageView, OnlineModeImage;
 		  @FXML
-		  private Pane settingsPagePane, homePagePane, LogoutView, ConnexionView;
+		  private Pane LogoutView, ConnexionView;
+		  @FXML
+		  private AnchorPane settingsPagePane, homePagePane;
 		  @FXML
 		  private Slider ramSlider;
 		  @FXML
 		  private ProgressBar progressBar;
 		  @FXML
-		  private Label ramLabel, PseudoLabel;
+		  private Label ramLabel, PseudoLabel, serverStatueLabel;
 		  private int allocatedRamValue;
 
 
@@ -281,12 +291,13 @@ public class MainController implements Initializable {
 									  .withCurseMods(curseMods)
 									  .withMods(mods)
 									  .withOptiFine(new OptiFineInfo(gameOptifineVersion, false))
-									  .withFileDeleter(new ModFileDeleter(true))
+									  .withFileDeleter(new ModFileDeleter(false))
 									  .build();
 
 
 							  final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
 									  .withVanillaVersion(version)
+									  .withExternalFiles(ExternalFile.getExternalFilesFromJson("http://arffornia.ddns.net/public/dowload/extFiles.php"))
 									  .withModLoaderVersion(forgeVersion)
 									  .withLogger(MainApp.getInstance().getLogger())
 									  .withProgressCallback(callback)
@@ -295,6 +306,11 @@ public class MainController implements Initializable {
 
 
 							  updater.update(MainApp.getInstance().getLauncherDir());
+
+
+
+
+
 							  startGame();
 
 					}catch (Exception e){
@@ -313,7 +329,7 @@ public class MainController implements Initializable {
 							  //check online mode
 							  if(OnlineModeStatue == false) {
 										System.out.println("authInfo 1");
-										this.authInfos = new AuthInfos(pseudoTextField.getText(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), "", "");
+										this.authInfos = new AuthInfos(saver.get("username"), UUID.randomUUID().toString(), UUID.randomUUID().toString(), "", "");
 							  }else {
 										System.out.println("authInfo 2");
 
@@ -331,6 +347,10 @@ public class MainController implements Initializable {
 									  authInfos, GameFolder.FLOW_UPDATER,
 									  Arrays.asList("-Xms256m", "-Xmx" + saver.get("allocatedRam") + "m"), Collections.emptyList());
 
+
+
+
+							  noFramework.getAdditionalVmArgs();
 							 Process p =  noFramework.launch(gameVersion, gameForgeVersion);
 
 							  //add memory to
@@ -389,6 +409,19 @@ public class MainController implements Initializable {
 
 		  }
 
+		  @FXML
+		  public void DoubleAuth() {
+					MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+					authenticator.loginWithAsyncWebview();
+
+
+
+
+
+
+		  }
+
+
 		  //When the play button is pressed
 		  public void play(){
 					//verif double click
@@ -424,6 +457,7 @@ public class MainController implements Initializable {
 					try {
 							  if (saver.get("allocatedRam") != null) {
 										allocatedRamValue = Integer.parseInt(saver.get("allocatedRam"));
+										ramLabel.setText(String.valueOf(allocatedRamValue));
 							  } else {
 										saver.set("allocatedRam", "3072");
 										allocatedRamValue = 3072;
@@ -462,6 +496,7 @@ public class MainController implements Initializable {
 															switchConnexionView(true);
 
 
+
 												  } catch (Exception e) {
 															e.printStackTrace();
 															MainApp.getInstance().getLogger().err(e.toString());
@@ -470,6 +505,30 @@ public class MainController implements Initializable {
 
 										}
 							  }
+
+							  //nb player
+
+
+
+
+
+							  URL nbPlayerUrl = new URL("http://arffornia.ddns.net/public/dowload/script.php");
+							  URLConnection con = nbPlayerUrl.openConnection();
+							  BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+							  String resultNbPlayer = in.readLine();
+
+
+							  if(Objects.equals(resultNbPlayer, "-1")){
+										serverStatueLabel.setText("Offline");
+
+							  }else {
+										serverStatueLabel.setText(resultNbPlayer+ "/100");
+							  }
+
+							  System.out.println(con.getContent());
+
+
+
 
 
 					}catch (Exception e){

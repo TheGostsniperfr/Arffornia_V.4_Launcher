@@ -4,9 +4,21 @@
     -fx-background-position: center;
 }
 
-#authentication_container{
-    -fx-background-color: rgba(255,255,255, 0.7);
+#authentication_container {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
     }
+
+#AuthTextField{
+    -fx-background-color: rgba(30, 35, 39, 0);
+    -fx-prompt-text-fill: rgba(255,255,255,1);
+    -fx-text-fill: white;
+}
+
+.authBtn{
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+
 
 #title_launcher{
     -fx-font-weight: bold;
@@ -15,15 +27,15 @@
 
 .menu_button{
      -fx-border-radius: 50px;
-     -fx-background-color: rgba(220, 220, 220,0);
+     -fx-background-color: rgba(132, 25, 17,0);
 }
 
 .menu_button:hover{
-     -fx-background-color: rgba(255, 255, 255,0.8);
+     -fx-background-color: rgba(200,200,200, 0.3);
 }
 
 .menu_test{
-     -fx-background-color: rgba(255, 255, 255,0.8);
+     -fx-background-color: rgba(156, 24, 14,0.9);
 }
 
 /*

@@ -11,195 +11,195 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="background" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thegostsniper.arffornialauncher.MainController">
       <children>
-            <HBox id="#title_launcher" prefHeight="727.0" prefWidth="1288.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                  <children>
-                        <Pane id="authentication_container" prefHeight="720.0" prefWidth="365.0" stylesheets="@css/style.css">
-                              <children>
-                                    <VBox minHeight="-Infinity" minWidth="365.0" prefHeight="720.0" prefWidth="365.0">
-                                          <children>
-                                                <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" stylesheets="@css/style.css" text="Arffornia V.4" textAlignment="CENTER">
-                                                      <font>
-                                                            <Font name="Montserrat Regular" size="50.0" />
-                                                      </font>
-                                                </Label>
-                                                <AnchorPane prefHeight="271.0" prefWidth="365.0">
-                                                      <children>
-                                                            <ImageView fitHeight="250.0" fitWidth="250.0" layoutX="58.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-                                                                  <image>
-                                                                        <Image url="@images/Crafting_Table.png" />
-                                                                  </image>
-                                                            </ImageView>
-                                                      </children>
-                                                </AnchorPane>
-                                                <Button fx:id="homeBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuSwitchEvent" prefHeight="46.0" prefWidth="365.0" stylesheets="@css/style.css" text=" - Accueil">
-                                                      <graphic>
-                                                            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                                                  <image>
-                                                                        <Image url="@images/icon_house.png" />
-                                                                  </image>
-                                                            </ImageView>
-                                                      </graphic>
-                                                      <font>
-                                                            <Font name="Montserrat Regular" size="22.0" />
-                                                      </font>
-                                                      <VBox.margin>
-                                                            <Insets />
-                                                      </VBox.margin>
-                           <styleClass>
-                              <String fx:value="menu_button" />
-                              <String fx:value="menu_test" />
-                           </styleClass>
-                                                </Button>
-                                                <Button fx:id="parameterBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuSwitchEvent" prefHeight="46.0" prefWidth="365.0" styleClass="menu_button" stylesheets="@css/style.css" text=" - Paramètre">
-                                                      <graphic>
-                                                            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                                                  <image>
-                                                                        <Image url="@images/icon_parameter.png" />
-                                                                  </image>
-                                                            </ImageView>
-                                                      </graphic>
-                                                      <font>
-                                                            <Font name="Montserrat Regular" size="22.0" />
-                                                      </font>
-                                                </Button>
-                        <AnchorPane prefHeight="285.0" prefWidth="365.0">
-                           <children>
-                              <Pane fx:id="ConnexionView" layoutY="111.0" prefHeight="174.0" prefWidth="365.0">
-                                 <children>
-                                    <Button fx:id="pseudoValidateBtn" layoutX="287.0" layoutY="115.0" mnemonicParsing="false" onAction="#SendPseudo">
-                                       <font>
-                                          <Font name="Montserrat Regular" size="15.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@images/checked.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button fx:id="OnlineModeBtn" layoutX="75.0" layoutY="114.0" mnemonicParsing="false" onAction="#OnlineMode" text="Online mode">
-                                       <graphic>
-                                          <ImageView fx:id="OnlineModeImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@images/wifi.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                    </Button>
-                                    <TextField fx:id="pseudoTextField" layoutX="75.0" layoutY="14.0" prefHeight="40.0" prefWidth="267.0" promptText="Taper votre pseudo">
-                                       <font>
-                                          <Font size="19.0" />
-                                       </font>
-                                    </TextField>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/user(1).png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/padlock.png" />
-                                       </image>
-                                    </ImageView>
-                                    <PasswordField fx:id="PasswordTextField" layoutX="75.0" layoutY="55.0" prefHeight="40.0" prefWidth="267.0" promptText="Taper votre mot de passe">
-                                       <font>
-                                          <Font name="Montserrat Regular" size="19.0" />
-                                       </font>
-                                    </PasswordField>
-                                 </children>
-                              </Pane>
-                              <Pane fx:id="LogoutView" prefHeight="285.0" prefWidth="365.0" visible="false">
-                                 <children>
-                                    <AnchorPane layoutY="170.0" prefHeight="115.0" prefWidth="365.0">
-                                       <children>
-                                          <ImageView fx:id="PseudoImageView" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@images/Steve.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label fx:id="PseudoLabel" layoutX="121.0" layoutY="41.0" prefHeight="34.0" prefWidth="174.0" text="Pseudo">
-                                             <font>
-                                                <Font size="23.0" />
-                                             </font>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+                              <VBox id="authentication_container" minHeight="-Infinity" minWidth="365.0" prefHeight="720.0" prefWidth="291.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                          <Label id="#title_launcher" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="383.0" stylesheets="@css/style.css" text="Arffornia V.4" textAlignment="CENTER" textFill="WHITE">
+                                                <font>
+                                                      <Font name="Montserrat Regular" size="50.0" />
+                                                </font>
                                           </Label>
-                                          <Button fx:id="LogoutBtn" layoutX="300.0" layoutY="36.0" mnemonicParsing="false" onAction="#Logout">
-                                             <graphic>
-                                                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@images/logout.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </graphic>
+                                          <AnchorPane prefHeight="271.0" prefWidth="365.0">
+                                                <children>
+                                                      <ImageView fitHeight="250.0" fitWidth="250.0" layoutX="58.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                  <Image url="@images/Crafting_Table.png" />
+                                                            </image>
+                                                      </ImageView>
+                                                </children>
+                                          </AnchorPane>
+                                          <Button fx:id="homeBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuSwitchEvent" prefHeight="46.0" prefWidth="365.0" stylesheets="@css/style.css" text=" - Accueil" textFill="WHITE">
+                                                <graphic>
+                                                      <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                  <Image url="@images/icon_house.png" />
+                                                            </image>
+                                                      </ImageView>
+                                                </graphic>
+                                                <font>
+                                                      <Font name="Montserrat Regular" size="22.0" />
+                                                </font>
+                                                <VBox.margin>
+                                                      <Insets />
+                                                </VBox.margin>
+                     <styleClass>
+                        <String fx:value="menu_button" />
+                        <String fx:value="menu_test" />
+                     </styleClass>
                                           </Button>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </Pane>
-                           </children>
-                        </AnchorPane>
-                                          </children>
-                                    </VBox>
-                              </children>
-                        </Pane>
-            <AnchorPane prefHeight="720.0" prefWidth="915.0">
+                                          <Button fx:id="parameterBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#menuSwitchEvent" prefHeight="46.0" prefWidth="365.0" styleClass="menu_button" stylesheets="@css/style.css" text=" - Paramètre" textFill="WHITE">
+                                                <graphic>
+                                                      <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                  <Image url="@images/icon_parameter.png" />
+                                                            </image>
+                                                      </ImageView>
+                                                </graphic>
+                                                <font>
+                                                      <Font name="Montserrat Regular" size="22.0" />
+                                                </font>
+                                          </Button>
+                                    </children>
+                              </VBox>
+            <AnchorPane prefHeight="250.0" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Pane fx:id="homePagePane" layoutY="6.0" prefHeight="714.0" prefWidth="915.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Pane fx:id="ConnexionView" layoutY="83.0" prefHeight="167.0" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="83.0">
                      <children>
-                        <Label layoutX="362.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page1" textFill="WHITE">
+                        <Button fx:id="pseudoValidateBtn" layoutX="287.0" layoutY="115.0" mnemonicParsing="false" onAction="#SendPseudo" styleClass="authBtn" stylesheets="@css/style.css">
                            <font>
-                              <Font size="51.0" />
+                              <Font name="Montserrat Regular" size="15.0" />
                            </font>
-                        </Label>
-                        <AnchorPane layoutY="555.0" prefHeight="158.0" prefWidth="915.0">
-                           <children>
-                              <Button id="playButton" fx:id="playButton" disable="true" layoutX="327.0" layoutY="46.0" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="261.0" stylesheets="@css/style.css" text="Jouer">
-                                 <font>
-                                    <Font name="Montserrat Regular" size="32.0" />
-                                 </font>
-                              </Button>
-                              <ProgressBar id="updateProgressBar" fx:id="progressBar" layoutY="139.0" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/checked.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="OnlineModeBtn" layoutX="75.0" layoutY="114.0" mnemonicParsing="false" onAction="#OnlineMode" styleClass="authBtn" stylesheets="@css/style.css" text="Online mode" textFill="WHITE">
+                           <graphic>
+                              <ImageView fx:id="OnlineModeImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/wifi.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Button>
+                        <TextField id="AuthTextField" fx:id="pseudoTextField" layoutX="75.0" layoutY="14.0" prefHeight="40.0" prefWidth="267.0" promptText="Taper votre email" stylesheets="@css/style.css">
+                           <font>
+                              <Font name="Montserrat Regular" size="19.0" />
+                           </font>
+                        </TextField>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/user(1).png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="14.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/padlock.png" />
+                           </image>
+                        </ImageView>
+                        <PasswordField id="AuthTextField" fx:id="PasswordTextField" layoutX="75.0" layoutY="55.0" prefHeight="40.0" prefWidth="267.0" promptText="Taper votre mot de passe" stylesheets="@css/style.css">
+                           <font>
+                              <Font name="Montserrat Regular" size="19.0" />
+                           </font>
+                        </PasswordField>
+                        <Button fx:id="DoubleAuthBtn" layoutX="4.0" layoutY="115.0" mnemonicParsing="false" onAction="#DoubleAuth" styleClass="authBtn" stylesheets="@css/style.css">
+                           <font>
+                              <Font name="Montserrat Regular" size="15.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/authentication.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </Pane>
-                  <Pane fx:id="settingsPagePane" prefHeight="720.0" prefWidth="915.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Pane fx:id="LogoutView" layoutY="135.0" prefHeight="115.0" prefWidth="365.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="135.0">
                      <children>
-                        <Label layoutX="336.0" layoutY="281.0" prefHeight="158.0" prefWidth="244.0" text="Page2" textFill="WHITE">
-                           <font>
-                              <Font size="51.0" />
-                           </font>
-                        </Label>
-                        <AnchorPane cacheShape="false" centerShape="false" layoutY="562.0" prefHeight="158.0" prefWidth="915.0">
+                        <AnchorPane prefHeight="113.0" prefWidth="365.0">
                            <children>
-                              <Label layoutX="14.0" layoutY="62.0" prefHeight="34.0" prefWidth="267.0" text="Mémoire alloué :" textFill="WHITE">
+                              <ImageView fx:id="PseudoImageView" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Steve.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="PseudoLabel" layoutX="121.0" layoutY="41.0" prefHeight="34.0" prefWidth="174.0" text="Pseudo" textFill="WHITE">
                                  <font>
-                                    <Font name="Montserrat Regular" size="25.0" />
+                                    <Font size="23.0" />
                                  </font>
                               </Label>
-                              <Slider id="ramSlider" fx:id="ramSlider" blockIncrement="1.0" layoutX="401.0" layoutY="62.0" majorTickUnit="1.0" max="16.0" min="1.0" minorTickCount="1" onMouseReleased="#onSliderChanged" prefHeight="34.0" prefWidth="388.0" showTickMarks="true" stylesheets="@css/style.css" value="3.0" />
-                              <Label fx:id="ramLabel" layoutX="234.0" layoutY="62.0" prefHeight="34.0" prefWidth="143.0" text="3072 Mo" textFill="WHITE">
-                                 <font>
-                                    <Font name="Montserrat Regular" size="25.0" />
-                                 </font>
-                              </Label>
+                              <Button fx:id="LogoutBtn" layoutX="300.0" layoutY="36.0" mnemonicParsing="false" onAction="#Logout" styleClass="authBtn" stylesheets="@css/style.css">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/logout.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </children>
                   </Pane>
                </children>
             </AnchorPane>
-                  </children>
-            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane fx:id="settingsPagePane" cacheShape="false" centerShape="false" layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="63.0" layoutY="62.0" prefHeight="34.0" prefWidth="267.0" text="Mémoire alloué :" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Regular" size="25.0" />
+               </font>
+            </Label>
+            <Slider id="ramSlider" fx:id="ramSlider" blockIncrement="1.0" layoutX="432.0" layoutY="62.0" majorTickUnit="1.0" max="16.0" min="1.0" minorTickCount="1" onMouseReleased="#onSliderChanged" prefHeight="34.0" prefWidth="388.0" showTickMarks="true" stylesheets="@css/style.css" value="3.0" />
+            <Label fx:id="ramLabel" layoutX="289.0" layoutY="62.0" prefHeight="34.0" prefWidth="143.0" text="3072 Mo" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Regular" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="homePagePane" layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0">
+         <children>
+            <VBox alignment="CENTER" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="915.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+               <children>
+                  <Button id="playButton" fx:id="playButton" disable="true" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="421.0" stylesheets="@css/style.css" text="Jouer">
+                     <font>
+                        <Font name="Montserrat Regular" size="32.0" />
+                     </font>
+                  </Button>
+                  <ProgressBar id="updateProgressBar" fx:id="progressBar" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" visible="false" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="67.0" fitWidth="67.0" layoutX="1104.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="112.98809432983398" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@images/za31npf5qg461.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="serverStatueLabel" layoutX="1188.0" layoutY="33.0" text="0/100" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="33.0">
+         <font>
+            <Font name="Montserrat Regular" size="24.0" />
+         </font>
+      </Label>
       </children>
 </AnchorPane>
