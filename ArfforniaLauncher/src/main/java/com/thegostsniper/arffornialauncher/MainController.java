@@ -73,7 +73,7 @@ public class MainController implements Initializable {
 		  private  String gameVersion = "1.18.2";
 		  private  String gameForgeVersion = "40.1.51";
 		  private String gameMCPVersion = "20220404.173914";
-		  private String gameOptifineVersion = "1.18.2_HD_U_H7";
+		  //private String gameOptifineVersion = "1.18.2_HD_U_H7";
 
 		  private Boolean OnlineModeStatue = true;
 		  
@@ -290,8 +290,8 @@ public class MainController implements Initializable {
 									  .withForgeVersion(gameForgeVersion)
 									  .withCurseMods(curseMods)
 									  .withMods(mods)
-									  .withOptiFine(new OptiFineInfo(gameOptifineVersion, false))
-									  .withFileDeleter(new ModFileDeleter(false))
+									  //.withOptiFine(new OptiFineInfo(gameOptifineVersion, false))
+									  .withFileDeleter(new ModFileDeleter(true))
 									  .build();
 
 
@@ -497,7 +497,7 @@ public class MainController implements Initializable {
 
 
 
-												  } catch (Exception e) {
+												  } catch (MicrosoftAuthenticationException e) {
 															e.printStackTrace();
 															MainApp.getInstance().getLogger().err(e.toString());
 												  }
@@ -524,6 +524,7 @@ public class MainController implements Initializable {
 							  }else {
 										serverStatueLabel.setText(resultNbPlayer+ "/100");
 							  }
+
 
 							  System.out.println(con.getContent());
 
