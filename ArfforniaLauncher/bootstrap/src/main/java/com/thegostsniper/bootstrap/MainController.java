@@ -17,6 +17,10 @@ public class MainController {
 		  public void setUpdateLabel(String newText){
 					updateLabel.setText(newText);
 		  }
+		  public void setAnchorBack(Boolean newStatue){
+					anchorBack.setVisible(newStatue);
+		  }
+
 
 		  public MainController(){
 					instance = this;
@@ -25,6 +29,7 @@ public class MainController {
 		  public static MainController getInstance() {
 					return instance;
 		  }
+
 
 
 

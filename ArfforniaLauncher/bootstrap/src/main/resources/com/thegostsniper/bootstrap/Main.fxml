@@ -4,19 +4,21 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thegostsniper.bootstrap.MainController">
+<AnchorPane id="background" fx:id="anchorBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" stylesheets="@css/style.css" visible="false" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thegostsniper.bootstrap.MainController">
    <children>
-      <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="100.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/Crafting_Table.png" />
          </image>
       </ImageView>
-      <Label fx:id="updateLabel" alignment="CENTER" layoutX="100.0" layoutY="417.0" prefHeight="41.0" prefWidth="300.0" text="Recherche de mise à jour">
+      <Label fx:id="updateLabel" alignment="CENTER" layoutX="-1.0" layoutY="309.0" prefHeight="41.0" prefWidth="400.0" text="Recherche de mise à jour" textFill="WHITE">
          <font>
             <Font name="Montserrat Regular" size="21.0" />
          </font>
       </Label>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
    </children>
 </AnchorPane>
