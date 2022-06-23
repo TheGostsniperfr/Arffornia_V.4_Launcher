@@ -1,13 +1,11 @@
 package com.thegostsniper.arffornialauncher;
 
-import com.google.gson.JsonArray;
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.DownloadList;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.json.CurseFileInfo;
 import fr.flowarg.flowupdater.download.json.ExternalFile;
 import fr.flowarg.flowupdater.download.json.Mod;
-import fr.flowarg.flowupdater.download.json.OptiFineInfo;
 import fr.flowarg.flowupdater.utils.ModFileDeleter;
 import fr.flowarg.flowupdater.utils.UpdaterOptions;
 import fr.flowarg.flowupdater.versions.AbstractForgeVersion;
@@ -20,6 +18,8 @@ import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import fr.theshark34.openlauncherlib.util.Saver;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,15 +31,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 
-
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -50,21 +49,23 @@ public class MainController implements Initializable {
 		  private boolean isRuntime =false;
 
 		  @FXML
-		  private Button homeBtn, parameterBtn, pseudoValidateBtn, playButton, OnlineModeBtn, LogoutBtn;
+		  private Button homeBtn, parameterBtn, playButton, OnlineModeBtn, LogoutBtn;
 		  @FXML
 		  private TextField pseudoTextField, PasswordTextField;
 		  @FXML
 		  private ImageView PseudoImageView, OnlineModeImage;
 		  @FXML
-		  private Pane LogoutView, ConnexionView;
+		  private Pane LogoutView, ConnexionView, carrouselContainer1, carrouselContainer2, carrouselContainer3;
 		  @FXML
-		  private AnchorPane settingsPagePane, homePagePane;
+		  private AnchorPane settingsPagePane;
 		  @FXML
 		  private Slider ramSlider;
 		  @FXML
 		  private ProgressBar progressBar;
 		  @FXML
 		  private Label ramLabel, PseudoLabel, serverStatueLabel;
+		  @FXML
+		  private VBox homePagePane;
 		  private int allocatedRamValue;
 
 
@@ -123,6 +124,8 @@ public class MainController implements Initializable {
 					}else {
 							  System.out.println("username too long");
 					}
+
+
 
 
 		  }
@@ -409,17 +412,7 @@ public class MainController implements Initializable {
 
 		  }
 
-		  @FXML
-		  public void DoubleAuth() {
-					MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
-					authenticator.loginWithAsyncWebview();
 
-
-
-
-
-
-		  }
 
 
 		  //When the play button is pressed
@@ -443,11 +436,67 @@ public class MainController implements Initializable {
 
 					}
 		  }
+		  public void CarrouselFadeSwitcher(FadeTransition fade1, FadeTransition fade2){
+
+					fade1.setFromValue(1.0);
+					fade1.setToValue(0.0);
+
+					fade2.setFromValue(0.0);
+					fade2.setToValue(1.0);
+
+					ParallelTransition parallelTransition = new ParallelTransition(fade1, fade2);
+					parallelTransition.play();
+		  }
+
+		  public void CarrouselSwitcher() throws InterruptedException {
+					//load images
+
+					String img1 = "http://arffornia.ddns.net/public/dowload/CarrouselImages/image1.png";
+					String img2 = "http://arffornia.ddns.net/public/dowload/CarrouselImages/image2.png";
+					String img3 = "http://arffornia.ddns.net/public/dowload/CarrouselImages/image3.png";
+
+					carrouselContainer1.setStyle("-fx-background-image: url( \"" + img1 + "\");");
+					carrouselContainer2.setStyle("-fx-background-image: url( \"" + img2 + "\");");
+					carrouselContainer3.setStyle("-fx-background-image: url( \"" + img3 + "\");");
+
+					double timeToSwitch = 1.0;
+
+					FadeTransition paneToSwitch1 = new FadeTransition(Duration.seconds(timeToSwitch), carrouselContainer1);
+					FadeTransition paneToSwitch2 = new FadeTransition(Duration.seconds(timeToSwitch), carrouselContainer2);
+					FadeTransition paneToSwitch3 = new FadeTransition(Duration.seconds(timeToSwitch), carrouselContainer3);
+
+
+
+
+
+					while (true){
+
+
+							  CarrouselFadeSwitcher(paneToSwitch3, paneToSwitch1);
+							  Thread.sleep(3000);
+							  CarrouselFadeSwitcher(paneToSwitch1, paneToSwitch2);
+							  Thread.sleep(3000);
+							  CarrouselFadeSwitcher(paneToSwitch2, paneToSwitch3);
+							  Thread.sleep(3000);
+
+
+
+					}
+		  }
 
 
 
 		  @Override
 		  public void initialize(URL url, ResourceBundle resourceBundle) {
+
+					Thread thread = new Thread(() -> {
+							  try {
+										CarrouselSwitcher();
+							  } catch (InterruptedException e) {
+										throw new RuntimeException(e);
+							  }
+					});
+					thread.start();
 
 					SystemInfo systemInfo = new SystemInfo();
 					GlobalMemory memory = systemInfo.getHardware().getMemory();
@@ -457,7 +506,7 @@ public class MainController implements Initializable {
 					try {
 							  if (saver.get("allocatedRam") != null) {
 										allocatedRamValue = Integer.parseInt(saver.get("allocatedRam"));
-										ramLabel.setText(String.valueOf(allocatedRamValue));
+										ramLabel.setText(String.valueOf(allocatedRamValue) + "Mo");
 							  } else {
 										saver.set("allocatedRam", "3072");
 										allocatedRamValue = 3072;
@@ -507,11 +556,6 @@ public class MainController implements Initializable {
 							  }
 
 							  //nb player
-
-
-
-
-
 							  URL nbPlayerUrl = new URL("http://arffornia.ddns.net/public/dowload/script.php");
 							  URLConnection con = nbPlayerUrl.openConnection();
 							  BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));

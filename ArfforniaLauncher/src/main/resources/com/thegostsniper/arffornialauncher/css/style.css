@@ -85,6 +85,14 @@
     -fx-pref-height: 20px;
     -fx-pref-width: 20px;
 
+}
+
+#carouselImage{
+    -fx-background-image: url("../images/spawnView.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+
 
 }
 

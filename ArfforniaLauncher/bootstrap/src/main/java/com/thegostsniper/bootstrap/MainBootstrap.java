@@ -125,6 +125,8 @@ public class MainBootstrap extends Application {
 					StartLauncher();
 		  }
 
+
+
 		  public void StartLauncher(){
 					Platform.runLater(() -> {
 									  MainController.getInstance().setUpdateLabel("Lancement");

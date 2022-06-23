@@ -17,6 +17,45 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="background" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thegostsniper.arffornialauncher.MainController">
       <children>
+      <AnchorPane fx:id="settingsPagePane" layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="63.0" layoutY="62.0" prefHeight="34.0" prefWidth="267.0" text="Mémoire alloué :" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Regular" size="25.0" />
+               </font>
+            </Label>
+            <Slider id="ramSlider" fx:id="ramSlider" blockIncrement="1.0" layoutX="432.0" layoutY="62.0" majorTickUnit="1.0" max="16.0" min="1.0" minorTickCount="1" onMouseReleased="#onSliderChanged" prefHeight="34.0" prefWidth="388.0" showTickMarks="true" stylesheets="@css/style.css" value="3.0" />
+            <Label fx:id="ramLabel" layoutX="289.0" layoutY="62.0" prefHeight="34.0" prefWidth="143.0" text="3072 Mo" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Regular" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="67.0" fitWidth="67.0" layoutX="1104.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="112.98809432983398" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@images/za31npf5qg461.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="serverStatueLabel" layoutX="1188.0" layoutY="33.0" text="0/100" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="33.0">
+         <font>
+            <Font name="Montserrat Regular" size="24.0" />
+         </font>
+      </Label>
+      <VBox fx:id="homePagePane" alignment="BOTTOM_CENTER" layoutX="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="915.0" spacing="20.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="365.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button id="playButton" fx:id="playButton" disable="true" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="421.0" stylesheets="@css/style.css" text="Jouer">
+               <font>
+                  <Font name="Montserrat Regular" size="32.0" />
+               </font>
+            </Button>
+            <ProgressBar id="updateProgressBar" fx:id="progressBar" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" visible="false" />
+         </children>
+      </VBox>
+      <Pane id="carouselImage" fx:id="carrouselContainer1" layoutX="365.0" layoutY="127.0" prefHeight="429.0" prefWidth="915.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="365.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="127.0" />
+      <Pane id="carouselImage" fx:id="carrouselContainer2" layoutX="375.0" layoutY="137.0" opacity="0.0" prefHeight="429.0" prefWidth="915.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="365.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="127.0" />
+      <Pane id="carouselImage" fx:id="carrouselContainer3" layoutX="385.0" layoutY="147.0" opacity="0.0" prefHeight="429.0" prefWidth="915.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="365.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="127.0" />
+      <AnchorPane layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
                               <VBox id="authentication_container" minHeight="-Infinity" minWidth="365.0" prefHeight="720.0" prefWidth="291.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -116,18 +155,6 @@
                               <Font name="Montserrat Regular" size="19.0" />
                            </font>
                         </PasswordField>
-                        <Button fx:id="DoubleAuthBtn" layoutX="4.0" layoutY="115.0" mnemonicParsing="false" onAction="#DoubleAuth" styleClass="authBtn" stylesheets="@css/style.css">
-                           <font>
-                              <Font name="Montserrat Regular" size="15.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/authentication.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                      </children>
                   </Pane>
                   <Pane fx:id="LogoutView" layoutY="135.0" prefHeight="115.0" prefWidth="365.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="135.0">
@@ -161,45 +188,5 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <AnchorPane fx:id="settingsPagePane" cacheShape="false" centerShape="false" layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Label layoutX="63.0" layoutY="62.0" prefHeight="34.0" prefWidth="267.0" text="Mémoire alloué :" textFill="WHITE">
-               <font>
-                  <Font name="Montserrat Regular" size="25.0" />
-               </font>
-            </Label>
-            <Slider id="ramSlider" fx:id="ramSlider" blockIncrement="1.0" layoutX="432.0" layoutY="62.0" majorTickUnit="1.0" max="16.0" min="1.0" minorTickCount="1" onMouseReleased="#onSliderChanged" prefHeight="34.0" prefWidth="388.0" showTickMarks="true" stylesheets="@css/style.css" value="3.0" />
-            <Label fx:id="ramLabel" layoutX="289.0" layoutY="62.0" prefHeight="34.0" prefWidth="143.0" text="3072 Mo" textFill="WHITE">
-               <font>
-                  <Font name="Montserrat Regular" size="25.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="homePagePane" layoutX="365.0" layoutY="562.0" prefHeight="158.0" prefWidth="915.0">
-         <children>
-            <VBox alignment="CENTER" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="915.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
-               <children>
-                  <Button id="playButton" fx:id="playButton" disable="true" mnemonicParsing="false" onAction="#play" prefHeight="67.0" prefWidth="421.0" stylesheets="@css/style.css" text="Jouer">
-                     <font>
-                        <Font name="Montserrat Regular" size="32.0" />
-                     </font>
-                  </Button>
-                  <ProgressBar id="updateProgressBar" fx:id="progressBar" prefHeight="18.0" prefWidth="915.0" progress="0.0" stylesheets="@css/style.css" visible="false" />
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <ImageView fitHeight="67.0" fitWidth="67.0" layoutX="1104.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="112.98809432983398" AnchorPane.topAnchor="14.0">
-         <image>
-            <Image url="@images/za31npf5qg461.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="serverStatueLabel" layoutX="1188.0" layoutY="33.0" text="0/100" textFill="WHITE" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="33.0">
-         <font>
-            <Font name="Montserrat Regular" size="24.0" />
-         </font>
-      </Label>
       </children>
 </AnchorPane>
