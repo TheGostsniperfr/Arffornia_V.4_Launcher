@@ -460,6 +460,7 @@ public class MainController implements Initializable {
 					carrouselContainer3.setStyle("-fx-background-image: url( \"" + img3 + "\");");
 
 					double timeToSwitch = 1.0;
+					Integer timeSleep = 4000;
 
 					FadeTransition paneToSwitch1 = new FadeTransition(Duration.seconds(timeToSwitch), carrouselContainer1);
 					FadeTransition paneToSwitch2 = new FadeTransition(Duration.seconds(timeToSwitch), carrouselContainer2);
@@ -473,11 +474,11 @@ public class MainController implements Initializable {
 
 
 							  CarrouselFadeSwitcher(paneToSwitch3, paneToSwitch1);
-							  Thread.sleep(3000);
+							  Thread.sleep(timeSleep);
 							  CarrouselFadeSwitcher(paneToSwitch1, paneToSwitch2);
-							  Thread.sleep(3000);
+							  Thread.sleep(timeSleep);
 							  CarrouselFadeSwitcher(paneToSwitch2, paneToSwitch3);
-							  Thread.sleep(3000);
+							  Thread.sleep(timeSleep);
 
 
 

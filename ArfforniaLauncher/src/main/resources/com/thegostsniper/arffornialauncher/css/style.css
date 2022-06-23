@@ -92,6 +92,7 @@
     -fx-background-size: contain;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.9), 30, 0, 0, 0);
 
 
 }
